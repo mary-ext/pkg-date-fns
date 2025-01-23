@@ -125,49 +125,52 @@ export const getYear = (date: Date): number => {
 
 /**
  * checks if a date is before another date.
- * @param date the date to compare.
- * @param compare the date to compare against.
+ * @template TDate
+ * @param a the date to compare.
+ * @param b the date to compare against.
  * @returns true if first date is before the second, false otherwise.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const isBeforeDate = (date: Date, compare: Date): boolean => {
-	return date !== compare && toUnixMilliseconds(date) < toUnixMilliseconds(compare);
+export const isBeforeDate = <TDate extends Date>(a: TDate, b: TDate): boolean => {
+	return a !== b && toUnixMilliseconds(a) < toUnixMilliseconds(b);
 };
 
 /**
  * checks if a date is after another date.
- * @param date the date to compare.
- * @param compare the date to compare against.
+ * @template TDate
+ * @param a the date to compare.
+ * @param b the date to compare against.
  * @returns true if the first date is after the second, false otherwise.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const isAfterDate = (date: Date, compare: Date): boolean => {
-	return date !== compare && toUnixMilliseconds(date) > toUnixMilliseconds(compare);
+export const isAfterDate = <TDate extends Date>(a: TDate, b: TDate): boolean => {
+	return a !== b && toUnixMilliseconds(a) > toUnixMilliseconds(b);
 };
 
 /**
  * checks if two dates are exactly the same.
+ * @template TDate
  * @param a the first date to compare.
  * @param b the second date to compare.
  * @returns true if the two dates are the same, false otherwise.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const isSameDate = (a: Date, b: Date): boolean => {
+export const isSameDate = <TDate extends Date>(a: TDate, b: TDate): boolean => {
 	return a === b || toUnixMilliseconds(a) === toUnixMilliseconds(b);
 };
 
 /**
  * checks if two dates fall on the same calendar day.
+ * @template TDate
  * @param a the first date to compare.
  * @param b the second date to compare.
  * @returns true if the two dates fall on the same calendar day, false otherwise.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const isSameCalendarDate = (a: Date, b: Date): boolean => {
+export const isSameCalendarDate = <TDate extends Date>(a: TDate, b: TDate): boolean => {
 	if (a === b) {
 		return true;
 	}
-
 	return (
 		getDayOfMonth(a) === getDayOfMonth(b) &&
 		getMonth(a) === getMonth(b) &&
@@ -177,16 +180,16 @@ export const isSameCalendarDate = (a: Date, b: Date): boolean => {
 
 /**
  * checks if two dates fall in the same calendar month.
+ * @template TDate
  * @param a the first date to compare.
  * @param b the second date to compare.
  * @returns true if the two dates are in the same month, false otherwise.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const isSameCalendarMonth = (a: Date, b: Date): boolean => {
+export const isSameCalendarMonth = <TDate extends Date>(a: TDate, b: TDate): boolean => {
 	if (a === b) {
 		return true;
 	}
-
 	return (
 		getMonth(a) === getMonth(b) &&
 		getYear(a) === getYear(b)
@@ -195,54 +198,57 @@ export const isSameCalendarMonth = (a: Date, b: Date): boolean => {
 
 /**
  * checks if two dates fall in the same calendar year.
+ * @template TDate
  * @param a the first date to compare.
  * @param b the second date to compare.
  * @returns true if the two dates are in the same year, false otherwise.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const isSameCalendarYear = (a: Date, b: Date): boolean => {
+export const isSameCalendarYear = <TDate extends Date>(a: TDate, b: TDate): boolean => {
 	if (a === b) {
 		return true;
 	}
-
 	return getYear(a) === getYear(b);
 };
 
 /**
  * returns the earlier of two dates.
+ * @template TDate
  * @param a the first date to compare.
  * @param b the second date to compare.
  * @returns the earlier of the two dates.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const min = (a: Date, b: Date): Date => {
+export const min = <TDate extends Date>(a: TDate, b: TDate): TDate => {
 	return isBeforeDate(a, b) ? a : b;
 };
 
 /**
  * returns the later of two dates.
+ * @template TDate
  * @param a the first date to compare.
  * @param b the second date to compare.
  * @returns the later of the two dates.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const max = (a: Date, b: Date): Date => {
+export const max = <TDate extends Date>(a: TDate, b: TDate): TDate => {
 	return isAfterDate(a, b) ? a : b;
 };
 
 /**
  * clamps a date between a minimum and maximum range.
+ * @template TDate
  * @param date the date to clamp.
  * @param min the minimum allowable date.
  * @param max the maximum allowable date.
  * @returns the clamped date.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const clamp = (
-	date: Date,
-	min: Date | undefined,
-	max: Date | undefined,
-): Date => {
+export const clamp = <TDate extends Date>(
+	date: TDate,
+	min: TDate | undefined,
+	max: TDate | undefined,
+): TDate => {
 	if (min !== undefined && isBeforeDate(date, min)) {
 		return min;
 	}
@@ -254,23 +260,27 @@ export const clamp = (
 	return date;
 };
 
+type DateConstructor<TDate extends Date> = { new (value: number | string | TDate): TDate };
+
 /**
  * creates a copy of a given date.
+ * @template TDate
  * @param date the date to clone.
  * @returns a new date object with the same value as the input date.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const cloneDate = (date: Date): Date => {
-	return new Date(date);
+export const cloneDate = <TDate extends Date>(date: TDate): TDate => {
+	return new (date.constructor as DateConstructor<TDate>)(date);
 };
 
 /**
  * returns the start of the day for a given date.
+ * @template TDate
  * @param date the date to find the start of the day for.
  * @returns a new date set to the start of the day.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const startOfDay = (date: Date): Date => {
+export const startOfDay = <TDate extends Date>(date: TDate): TDate => {
 	const d = cloneDate(date);
 
 	d.setHours(0, 0, 0, 0);
@@ -279,11 +289,12 @@ export const startOfDay = (date: Date): Date => {
 
 /**
  * returns the end of the day for a given date.
+ * @template TDate
  * @param date the date to find the end of the day for.
  * @returns a new date set to the end of the day.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const endOfDay = (date: Date): Date => {
+export const endOfDay = <TDate extends Date>(date: TDate): TDate => {
 	const d = cloneDate(date);
 
 	d.setHours(23, 59, 59, 999);
@@ -292,11 +303,12 @@ export const endOfDay = (date: Date): Date => {
 
 /**
  * returns the start of the week for a given date.
+ * @template TDate
  * @param date the date to find the start of the week for.
  * @returns a new date set to the start of the week.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const startOfWeek = (date: Date): Date => {
+export const startOfWeek = <TDate extends Date>(date: TDate): TDate => {
 	const d = cloneDate(date);
 
 	d.setDate(getDayOfMonth(d) - getDayOfWeek(d));
@@ -306,11 +318,12 @@ export const startOfWeek = (date: Date): Date => {
 
 /**
  * returns the end of the week for a given date.
+ * @template TDate
  * @param date the date to find the end of the week for.
  * @returns a new date set to the end of the week.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const endOfWeek = (date: Date): Date => {
+export const endOfWeek = <TDate extends Date>(date: TDate): TDate => {
 	const d = cloneDate(date);
 
 	d.setDate(getDayOfMonth(d) + (6 - getDayOfWeek(d)));
@@ -320,11 +333,12 @@ export const endOfWeek = (date: Date): Date => {
 
 /**
  * returns the start of the month for a given date.
+ * @template TDate
  * @param date the date to find the start of the month for.
  * @returns a new date set to the start of the month.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const startOfMonth = (date: Date): Date => {
+export const startOfMonth = <TDate extends Date>(date: TDate): TDate => {
 	const d = cloneDate(date);
 
 	d.setDate(1);
@@ -334,11 +348,12 @@ export const startOfMonth = (date: Date): Date => {
 
 /**
  * returns the end of the month for a given date.
+ * @template TDate
  * @param date the date to find the end of the month for.
  * @returns a new date set to the end of the month.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const endOfMonth = (date: Date): Date => {
+export const endOfMonth = <TDate extends Date>(date: TDate): TDate => {
 	const d = cloneDate(date);
 
 	d.setMonth(getMonth(d) + 1, 0);
@@ -348,11 +363,12 @@ export const endOfMonth = (date: Date): Date => {
 
 /**
  * returns the start of the year for a given date.
+ * @template TDate
  * @param date the date to find the start of the year for.
  * @returns a new date set to the start of the year.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const startOfYear = (date: Date): Date => {
+export const startOfYear = <TDate extends Date>(date: TDate): TDate => {
 	const d = cloneDate(date);
 
 	d.setMonth(0, 1);
@@ -362,11 +378,12 @@ export const startOfYear = (date: Date): Date => {
 
 /**
  * returns the end of the year for a given date.
+ * @template TDate
  * @param date the date to find the end of the year for.
  * @returns a new date set to the end of the year.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const endOfYear = (date: Date): Date => {
+export const endOfYear = <TDate extends Date>(date: TDate): TDate => {
 	const d = cloneDate(date);
 
 	d.setMonth(11, 31);
@@ -376,12 +393,13 @@ export const endOfYear = (date: Date): Date => {
 
 /**
  * adds a specified number of milliseconds to a date.
+ * @template TDate
  * @param date the date to add milliseconds to.
  * @param milliseconds the number of milliseconds to add.
  * @returns a new date with the added milliseconds.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const addMilliseconds = (date: Date, milliseconds: number): Date => {
+export const addMilliseconds = <TDate extends Date>(date: TDate, milliseconds: number): TDate => {
 	const d = cloneDate(date);
 
 	d.setMilliseconds(getMilliseconds(d) + milliseconds);
@@ -390,12 +408,13 @@ export const addMilliseconds = (date: Date, milliseconds: number): Date => {
 
 /**
  * adds a specified number of seconds to a date.
+ * @template TDate
  * @param date the date to add seconds to.
  * @param seconds the number of seconds to add.
  * @returns a new date with the added seconds.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const addSeconds = (date: Date, seconds: number): Date => {
+export const addSeconds = <TDate extends Date>(date: TDate, seconds: number): TDate => {
 	const d = cloneDate(date);
 
 	d.setSeconds(getSeconds(d) + seconds);
@@ -404,12 +423,13 @@ export const addSeconds = (date: Date, seconds: number): Date => {
 
 /**
  * adds a specified number of minutes to a date.
+ * @template TDate
  * @param date the date to add minutes to.
  * @param minutes the number of minutes to add.
  * @returns a new date with the added minutes.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const addMinutes = (date: Date, minutes: number): Date => {
+export const addMinutes = <TDate extends Date>(date: TDate, minutes: number): TDate => {
 	const d = cloneDate(date);
 
 	d.setMinutes(getMinutes(d) + minutes);
@@ -418,12 +438,13 @@ export const addMinutes = (date: Date, minutes: number): Date => {
 
 /**
  * adds a specified number of hours to a date.
+ * @template TDate
  * @param date the date to add hours to.
  * @param hours the number of hours to add.
  * @returns a new date with the added hours.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const addHours = (date: Date, hours: number): Date => {
+export const addHours = <TDate extends Date>(date: TDate, hours: number): TDate => {
 	const d = cloneDate(date);
 
 	d.setHours(getHours(d) + hours);
@@ -432,12 +453,13 @@ export const addHours = (date: Date, hours: number): Date => {
 
 /**
  * adds a specified number of days to a date.
+ * @template TDate
  * @param date the date to add days to.
  * @param days the number of days to add.
  * @returns a new date with the added days.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const addDays = (date: Date, days: number): Date => {
+export const addDays = <TDate extends Date>(date: TDate, days: number): TDate => {
 	const d = cloneDate(date);
 
 	d.setDate(getDayOfMonth(d) + days);
@@ -446,12 +468,13 @@ export const addDays = (date: Date, days: number): Date => {
 
 /**
  * adds a specified number of months to a date.
+ * @template TDate
  * @param date the date to add months to.
  * @param months the number of months to add.
  * @returns a new date with the added months.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const addMonths = (date: Date, months: number): Date => {
+export const addMonths = <TDate extends Date>(date: TDate, months: number): TDate => {
 	const d = cloneDate(date);
 
 	d.setMonth(getMonth(d) + months);
@@ -460,12 +483,13 @@ export const addMonths = (date: Date, months: number): Date => {
 
 /**
  * adds a specified number of years to a date.
+ * @template TDate
  * @param date the date to add years to.
  * @param years the number of years to add.
  * @returns a new date with the added years.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const addYears = (date: Date, years: number): Date => {
+export const addYears = <TDate extends Date>(date: TDate, years: number): TDate => {
 	const d = cloneDate(date);
 
 	d.setFullYear(getYear(d) + years);
@@ -474,12 +498,13 @@ export const addYears = (date: Date, years: number): Date => {
 
 /**
  * returns the previous occurrence of a specific day of the week.
+ * @template TDate
  * @param date the starting date.
  * @param day the target day of the week.
  * @returns a new date set to the previous occurrence of the specified day.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const previousDay = (date: Date, day: DayOfWeek): Date => {
+export const previousDay = <TDate extends Date>(date: TDate, day: DayOfWeek): TDate => {
 	let delta = day - getDayOfWeek(date);
 	if (delta >= 0) {
 		delta -= 7;
@@ -490,12 +515,13 @@ export const previousDay = (date: Date, day: DayOfWeek): Date => {
 
 /**
  * returns the next occurrence of a specific day of the week.
+ * @template TDate
  * @param date the starting date.
  * @param day the target day of the week.
  * @returns a new date set to the next occurrence of the specified day.
  */
 /*#__NO_SIDE_EFFECTS__*/
-export const nextDay = (date: Date, day: DayOfWeek): Date => {
+export const nextDay = <TDate extends Date>(date: TDate, day: DayOfWeek): TDate => {
 	let delta = day - getDayOfWeek(date);
 	if (delta <= 0) {
 		delta += 7;
