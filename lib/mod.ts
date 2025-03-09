@@ -309,6 +309,150 @@ export const clamp = <TDate extends Date>(
 	return date;
 };
 
+/**
+ * calculates the difference in milliseconds between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in milliseconds.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInMilliseconds = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return toUnixMilliseconds(a) - toUnixMilliseconds(b);
+};
+
+/**
+ * calculates the difference in seconds between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in seconds.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInSeconds = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return Math.trunc(differenceInMilliseconds(a, b) / 1_000);
+};
+
+/**
+ * calculates the difference in minutes between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in minutes.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInMinutes = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return Math.trunc(differenceInMilliseconds(a, b) / 60_000);
+};
+
+/**
+ * calculates the difference in hours between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in hours.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInHours = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return Math.trunc(differenceInMilliseconds(a, b) / 3_600_000);
+};
+
+/**
+ * calculates the difference in days between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in days.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInDays = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return Math.trunc(differenceInMilliseconds(a, b) / 86_400_000);
+};
+
+/**
+ * calculates the difference in calendar days between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in calendar days.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInCalendarDays = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return differenceInDays(startOfDay(a), startOfDay(b));
+};
+
+/**
+ * calculates the difference in weeks between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in weeks.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInWeeks = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return Math.trunc(differenceInDays(a, b) / 7);
+};
+
+/**
+ * calculates the difference in calendar weeks between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in calendar weeks.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInCalendarWeeks = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return differenceInWeeks(startOfWeek(a), startOfWeek(b));
+};
+
+/**
+ * calculates the difference in months between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in months.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInMonths = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return (getYear(a) - getYear(b)) * 12 + (getMonth(a) - getMonth(b));
+};
+
+/**
+ * calculates the difference in calendar months between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in calendar months.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInCalendarMonths = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return differenceInMonths(startOfMonth(a), startOfMonth(b));
+};
+
+/**
+ * calculates the difference in years between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in years.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInYears = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return getYear(a) - getYear(b);
+};
+
+/**
+ * calculates the difference in calendar years between two dates.
+ * @template TDate
+ * @param a the first date.
+ * @param b the second date.
+ * @returns the difference in calendar years.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const differenceInCalendarYears = <TDate extends Date>(a: TDate, b: TDate): number => {
+	return differenceInYears(startOfYear(a), startOfYear(b));
+};
+
 type DateConstructor<TDate extends Date> = { new (value: number | string | TDate): TDate };
 
 /**
