@@ -124,6 +124,55 @@ export const getYear = (date: Date): number => {
 };
 
 /**
+ * compares two dates and returns a number indicating their relative order,
+ * in UTC time.
+ * @template TDate
+ * @param a the first date to compare.
+ * @param b the second date to compare.
+ * @returns -1 if a is before b, 1 if a is after b, or 0 if they are equal.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const compareUtcAsc = <TDate extends Date>(a: TDate, b: TDate): number => {
+	const aMs = toUnixMilliseconds(a);
+	const bMs = toUnixMilliseconds(b);
+
+	if (aMs < bMs) {
+		return -1;
+	}
+	if (aMs > bMs) {
+		return 1;
+	}
+	return 0;
+};
+
+/**
+ * compares two dates and returns a number indicating their relative order,
+ * in local time.
+ * @template TDate
+ * @param a the first date to compare.
+ * @param b the second date to compare.
+ * @returns -1 if a is before b, 1 if a is after b, or 0 if they are equal.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const compareLocalAsc = <TDate extends Date>(a: TDate, b: TDate): number => {
+	const diff = getMilliseconds(a) - getMilliseconds(b) ||
+		getSeconds(a) - getSeconds(b) ||
+		getMinutes(a) - getMinutes(b) ||
+		getHours(a) - getHours(b) ||
+		getDayOfMonth(a) - getDayOfMonth(b) ||
+		getMonth(a) - getMonth(b) ||
+		getYear(a) - getYear(b);
+
+	if (diff < 0) {
+		return -1;
+	}
+	if (diff > 0) {
+		return 1;
+	}
+	return 0;
+};
+
+/**
  * checks if a date is before another date.
  * @template TDate
  * @param a the date to compare.
