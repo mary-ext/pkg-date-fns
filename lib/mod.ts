@@ -54,6 +54,16 @@ export const getMilliseconds = (date: Date): number => {
 };
 
 /**
+ * returns the milliseconds portion of a given date in UTC.
+ * @param date the date to extract from.
+ * @returns the milliseconds portion of the date.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const getUtcMilliseconds = (date: Date): number => {
+	return date.getUTCMilliseconds();
+};
+
+/**
  * returns the seconds portion of a given date.
  * @param date the date to extract from.
  * @returns the seconds portion of the date.
@@ -61,6 +71,16 @@ export const getMilliseconds = (date: Date): number => {
 /*#__NO_SIDE_EFFECTS__*/
 export const getSeconds = (date: Date): number => {
 	return date.getSeconds();
+};
+
+/**
+ * returns the seconds portion of a given date in UTC.
+ * @param date the date to extract from.
+ * @returns the seconds portion of the date.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const getUtcSeconds = (date: Date): number => {
+	return date.getUTCSeconds();
 };
 
 /**
@@ -74,6 +94,16 @@ export const getMinutes = (date: Date): number => {
 };
 
 /**
+ * returns the minutes portion of a given date in UTC.
+ * @param date the date to extract from.
+ * @returns the minutes portion of the date.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const getUtcMinutes = (date: Date): number => {
+	return date.getUTCMinutes();
+};
+
+/**
  * returns the hours portion of a given date.
  * @param date the date to extract from.
  * @returns the hours portion of the date.
@@ -81,6 +111,16 @@ export const getMinutes = (date: Date): number => {
 /*#__NO_SIDE_EFFECTS__*/
 export const getHours = (date: Date): number => {
 	return date.getHours();
+};
+
+/**
+ * returns the hours portion of a given date in UTC.
+ * @param date the date to extract from.
+ * @returns the hours portion of the date.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const getUtcHours = (date: Date): number => {
+	return date.getUTCHours();
 };
 
 /**
@@ -94,6 +134,16 @@ export const getDayOfWeek = (date: Date): DayOfWeek => {
 };
 
 /**
+ * returns the day of the week for a given date in UTC (0 = Sunday, 6 = Saturday).
+ * @param date the date to extract from.
+ * @returns the day of the week as a number.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const getUtcDayOfWeek = (date: Date): DayOfWeek => {
+	return date.getUTCDay() as DayOfWeek;
+};
+
+/**
  * returns the day of the month for a given date.
  * @param date the date to extract from.
  * @returns the day of the month as a number.
@@ -101,6 +151,16 @@ export const getDayOfWeek = (date: Date): DayOfWeek => {
 /*#__NO_SIDE_EFFECTS__*/
 export const getDayOfMonth = (date: Date): number => {
 	return date.getDate();
+};
+
+/**
+ * returns the day of the month for a given date in UTC.
+ * @param date the date to extract from.
+ * @returns the day of the month as a number.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const getUtcDayOfMonth = (date: Date): number => {
+	return date.getUTCDate();
 };
 
 /**
@@ -114,6 +174,16 @@ export const getMonth = (date: Date): number => {
 };
 
 /**
+ * returns the month portion of a given date in UTC (0 = January, 11 = December).
+ * @param date the date to extract from.
+ * @returns the month as a number.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const getUtcMonth = (date: Date): number => {
+	return date.getUTCMonth();
+};
+
+/**
  * returns the year portion of a given date.
  * @param date the date to extract from.
  * @returns the year as a number.
@@ -121,6 +191,16 @@ export const getMonth = (date: Date): number => {
 /*#__NO_SIDE_EFFECTS__*/
 export const getYear = (date: Date): number => {
 	return date.getFullYear();
+};
+
+/**
+ * returns the year portion of a given date in UTC.
+ * @param date the date to extract from.
+ * @returns the year as a number.
+ */
+/*#__NO_SIDE_EFFECTS__*/
+export const getUtcYear = (date: Date): number => {
+	return date.getUTCFullYear();
 };
 
 /**
