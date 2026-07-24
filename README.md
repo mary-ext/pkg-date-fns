@@ -1,5 +1,7 @@
 # date-fns
 
+[JSR](https://jsr.io/@mary/date-fns) | [source code](https://tangled.sh/did:plc:q6qsbeuljkjniqlkbxenpmwm)
+
 small date utilities
 
 ```ts
